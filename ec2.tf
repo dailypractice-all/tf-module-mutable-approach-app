@@ -13,7 +13,7 @@ resource "aws_spot_instance_request" "instance" {
   }
 }
 
-resource "aws_ec2_tag" "monitor-tag" {
+resource "aws_ec2_tag" "name-tag" {
   count         = var.INSTANCE_COUNT
   resource_id = aws_spot_instance_request.instance.*.spot_instance_id[count.index]
   key = "name"
@@ -30,7 +30,7 @@ resource "null_resource" "ansible" {
     }
 
     inline = [
-    "ansible-pull -U http://github.com/dailypractice-all/roboshop-ansible.git roboshop.yml -e HOST=localhost -e ROLE=rabbitmq -e ENV=${var.ENV}",
+    "ansible-pull -U http://github.com/dailypractice-all/roboshop-ansible.git roboshop.yml -e HOST=localhost -e ROLE=${var.COMPONENT} -e ENV=${var.ENV}",
     ]
   }
 }
