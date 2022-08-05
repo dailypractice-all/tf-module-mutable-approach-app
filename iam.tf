@@ -34,9 +34,6 @@ resource "aws_iam_policy" "allow-secret-manager-read-access" {
 
 resource "aws_iam_role" "allow-secret-manager-read-access" {
   name = "Roboshop-${var.COMPONENT}-SecretManager-ReadAccess-${var.ENV}"
-
-  # Terraform's "jsonencode" function converts a
-  # Terraform expression result to valid JSON syntax.
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
     Statement = [
@@ -52,7 +49,7 @@ resource "aws_iam_role" "allow-secret-manager-read-access" {
   })
 
   tags = {
-    tag-key = "Roboshop-RabbitMQ-SecretManager-ReadAccess-${var.ENV}"
+    tag-key = "Roboshop-${var.COMPONENT}SecretManager-ReadAccess-${var.ENV}"
   }
 }
 
@@ -62,6 +59,6 @@ resource "aws_iam_role_policy_attachment" "attach-policy" {
 }
 
 resource "aws_iam_instance_profile" "allow-secret-manager-read-access" {
-  name = "Roboshop-RabbitMQ-SecretManager-ReadAccess-${var.ENV}"
+  name = "Roboshop-${var.COMPONENT}-SecretManager-ReadAccess-${var.ENV}"
   role = aws_iam_role.allow-secret-manager-read-access.name
 }
