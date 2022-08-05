@@ -1,3 +1,3 @@
 locals {
-  TAG_PREFIX = "${var.PROJECT}-${var.ENV}-alb"
+  TAG_PREFIX = "${var.COMPONENT}-${var.ENV}"
 }
